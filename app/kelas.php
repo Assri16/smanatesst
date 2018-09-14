@@ -8,9 +8,9 @@ class kelas extends Model
 {
     protected $fillable = ['nm_kelas'];
 
-    public function mapelkelas()
+    public function mapel()
     {
-        return $this->belongsToMany(mapel::class);
+        return $this->belongsToMany('App\mapel');
     }
 
 }

@@ -8,10 +8,10 @@ class ujian extends Model
 {
     protected $fillable = ['id','id_namaujian','ujian','kodeujian','waktupengerjaan'];
 
-    public function roles()
-    {
-        return $this->belongsToMany('App\banksoal');
-    }
+    public function soal()
+{
+    return $this->belongsToMany('App\banksoal','ujian_soal','id_ujian','id_soal');
+}
 
     public function namaujian()
     {

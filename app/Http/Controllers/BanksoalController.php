@@ -8,6 +8,7 @@ use App\jawaban_soal;
 use DB;
 use Illuminate\Http\Request;
 use App\Helpers\Fungsi;
+use Yajra\Datatables\Datatables;
 
 class BanksoalController extends Controller
 {
@@ -16,25 +17,49 @@ class BanksoalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $soal = banksoal::all();
-        $lvsoal = lvsoal::all();
-        return view('banksoal.index',compact('soal','lvsoal'));
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+         if($request->ajax())
+        {
+            $banksoal = banksoal::all();
+          return Datatables::of($banksoal)
+          ->addColumn('soal',function($banksoal){
+            return "
+                " . $banksoal->soal . "
+            ";
+          })
+          ->addColumn('jawaban',function($banksoal){
+            return "
+                " . count($banksoal->jawaban) . "
+            ";
+          })
+          ->addColumn('levelsoal', function($banksoal){
+            return "
+                " . $banksoal->lvsoal->lvsoal . "
+            ";
+          })
+          ->addColumn('action', function($banksoal){
+           return '
+               <a href="soal/jawaban/' . $banksoal->id . '" title="Jawaban"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> Jawaban</button></a>
+                 <a href="soal/' . $banksoal->id . '/edit" title="Edit"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+            ';
+          })
+          ->addIndexColumn()
+          ->rawColumns(['soal','action'])
+          ->make(true);
+        }
+
+ $banksoal= banksoal::all(); 
+            
+        return view('banksoal.index', compact('banksoal'));
+    }
+     public function create()
     {
         $soal = banksoal::all();
         $lvsoal = lvsoal::all();
         return view('banksoal.tambah',compact('soal','lvsoal'));
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -58,10 +83,8 @@ class BanksoalController extends Controller
             $soal->image = $fileName;
         }
         $soal->save();
-
         return redirect('soal')->with('flash_message', 'Soal Berhasil Di Tambahkan');
     }
-
     /**
      * Display the specified resource.
      *

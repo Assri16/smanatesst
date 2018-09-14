@@ -16,6 +16,7 @@ class CreateUjianSoalsTable extends Migration
         Schema::create('ujian_soals', function (Blueprint $table) {
             $table->integer('id_ujian')->unsigned();
             $table->integer('id_soal')->unsigned();
+            $table->timestamps();
 
              $table->foreign('id_soal') // foreignKey 
               ->references('id') // dari kolom id 

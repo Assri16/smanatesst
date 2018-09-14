@@ -14,14 +14,14 @@
      <!-- Bootstrap 3.3.7 -->
      <link rel="stylesheet" href="{{ asset('css/toogle.css') }}" >
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" >
-
+<link rel="stylesheet" href="{{ asset('adminlte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" >
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
  <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap.min.css') }}" >
 <!-- fullCalendar -->
 <link rel="stylesheet" href="{{ asset('adminlte/bower_components/fullcalendar/dist/fullcalendar.min.css') }}" >
 <link rel="stylesheet" media="print" href="{{ asset('adminlte/bower_components/fullcalendar/dist/fullcalendar.print.min.css') }}" >
- 
-
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css">
   <link rel="stylesheet" href="{{ asset('adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css') }}" >
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('adminlte/bower_components/font-awesome/css/font-awesome.min.css') }}" >
@@ -89,20 +89,40 @@
         <span class="sr-only">Toggle navigation</span>
       </a>
 
-      <div class="nav navbar-nav navbar-custom-menu">
-        <!-- Right Side Of Navbar -->
-                   <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-      
-                      <!--  -->
-                      <li>
+    <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="nav navbar-nav">
                         &nbsp;
-                        &nbsp;
-                        &nbsp;
-                        &nbsp;
-                      </li>
                     </ul>
-      </div>
+
+                    <!-- Right Side Of Navbar -->
+                    <ul class="nav navbar-nav navbar-right">
+                        <!-- Authentication Links -->
+                        @guest
+                            <li><a href="{{ route('login') }}">Login</a></li>
+                        @else
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                            Logout
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endguest
+                    </ul>
+                </div>
     </nav>
     </header>
  <!-- Left side column. contains the logo and sidebar -->
@@ -203,6 +223,7 @@
 <script src="{{ asset('adminlte/bower_components/moment/moment.js')}}"></script>
 <script src="{{ asset('adminlte/bower_components/fullcalendar/dist/fullcalendar.min.js')}}"></script>
      <script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script> 
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
      <script src="https://cdn.ckeditor.com/4.10.0/full/ckeditor.js"></script>
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
@@ -211,5 +232,9 @@
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     @yield('java')
+   <script src="{{ asset('js/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
+    @yield('scripts')
 </body>
 </html>

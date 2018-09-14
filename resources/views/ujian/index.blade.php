@@ -44,6 +44,11 @@
       <td>{!! $list->namaujian->namaujian !!}</td>
       <td>{!! $list->kodeujian !!}</td>
       <td>
+                    <a  href="{{action('UjianController@managesoal', $list['id'])}}" class="btn btn-success ">
+                          Soal
+                                </a> 
+                    </td>
+                    <td>
                     <a href="{{action('UjianController@edit', $list['id'])}}" class="btn btn-warning">Ubah</a>
                     </td>
                     <td>
@@ -58,5 +63,8 @@
 @endforeach
   </tbody>
           </table>
+           <div class="col-md-6">
+   <?php echo str_replace('/?', '?', $ujian->render()); ?>
+  </div>
         </div>
 @endsection

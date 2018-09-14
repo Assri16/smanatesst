@@ -17,8 +17,8 @@ class banksoal extends Model
         return $this->hasMany('App\jawaban_soal','id_soal','id');
     }
 
-    public function ujian()
+    public function ujiansoal()
     {
-        return $this->belongsToMany(ujian::class);
+        return $this->belongsToMany('App\ujian');
     }
 }

@@ -38,23 +38,22 @@
                                 </thead>
                                 <tbody>
   <?php $no=1; ?>
-@foreach($kelasmapel as $list)
+
+@foreach($kelasmapels as $list)
     <tr>
       <td class="text-center">{!! $no !!}</td>
-      <td>{{ $list->nm_kelas }}</td>
-      @foreach($mapelkelas as $mapel)
-      <td>{{ $mapel->nm_mapel }}</td>
-       @endforeach
+      <td>{!! $list->nm_kelas !!}</td>
+      <td>{{ $list->nm_mapel }}</td>
+      @foreach($kelasguru as $kg)@endforeach
       <td>
-                    <a href="{{action('KelasGuruController@edit', $list['id'])}}" class="btn btn-warning">Ubah</a>
+
+                    <a href="{{action('KelasGuruController@edit', $kg['id'])}}" class="btn btn-warning">Ubah</a>
                     </td>
                     <td>
-                    <form method="post" action="{{action('KelasGuruController@destroy', $list['id'])}}">
+                    <form method="post" action="{{action('KelasGuruController@destroy', $kg['id'])}}">
                     {{csrf_field()}}
                     <input name="_method" type="hidden" value="DELETE">
                     <button  class="btn btn-danger" type="submit">Hapus</button>
-        </form>
-                    </td>
     </tr>
     <?php $no++; ?>
 @endforeach

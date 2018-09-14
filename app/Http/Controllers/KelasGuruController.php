@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\kelas_guru;
 use App\kelas;
 use App\mapel;
+use DB;
 use Illuminate\Http\Request;
 
 class KelasGuruController extends Controller
@@ -16,9 +17,12 @@ class KelasGuruController extends Controller
      */
     public function index()
     {
-        $kelasmapel = kelas::all();
+        $kelasmapels = DB::table('kelas_gurus')->join('kelas','kelas_gurus.id_kelas','=','kelas.id')
+        ->join('mapels','kelas_gurus.id_mapel','=','mapels.id')
+        ->select('kelas.*','mapels.*')->get();
         $mapelkelas = mapel::all();
-        return view('kelas_guru.index',compact('kelasmapel','mapelkelas'));
+        $kelasguru = kelas_guru::all();
+        return view('kelas_guru.index',compact('kelasmapels','mapelkelas','kelasguru'));
     }
 
     /**
